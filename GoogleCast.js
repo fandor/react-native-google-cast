@@ -12,6 +12,9 @@ export default {
   isConnected: function () {
     return GoogleCast.isConnected();
   },
+  isPlaying: function () {
+     return GoogleCast.isPlaying();
+   },
   getDevices: function () {
     return GoogleCast.getDevices();
   },
