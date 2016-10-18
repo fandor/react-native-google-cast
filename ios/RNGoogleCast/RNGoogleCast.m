@@ -67,6 +67,18 @@ RCT_REMAP_METHOD(isConnected,
 
 }
 
+RCT_REMAP_METHOD(isPlaying,
+                 resolveMe:(RCTPromiseResolveBlock)resolve
+                 rejectMe:(RCTPromiseRejectBlock)reject)
+
+{
+  NSMutableDictionary *payload = [[NSMutableDictionary alloc] init];
+  BOOL isPlaying = self.mediaControlChannel.mediaStatus.playerState == GCKMediaPlayerStatePlaying;
+  [payload setObject:[NSNumber numberWithBool:isPlaying]  forKey:@"isPlaying"];
+  RCTLogInfo(@"is playing? %d", isPlaying);
+  resolve(payload);
+}
+
 RCT_EXPORT_METHOD(connectToDevice:(NSString *)deviceId)
 {
   RCTLogInfo(@"connecting to device %@", deviceId);
