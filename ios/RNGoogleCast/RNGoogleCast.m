@@ -7,6 +7,7 @@ static NSString *const DEVICE_CHANGED = @"GoogleCast:DeviceListChanged";
 static NSString *const DEVICE_AVAILABLE = @"GoogleCast:DeviceAvailable";
 static NSString *const DEVICE_CONNECTED = @"GoogleCast:DeviceConnected";
 static NSString *const MEDIA_LOADED = @"GoogleCast:MediaLoaded";
+static NSString *const MEDIA_STOPPED = @"GoogleCast:MediaStopped";
 
 
 @implementation GoogleCast
@@ -21,6 +22,7 @@ RCT_EXPORT_MODULE();
            @"DEVICE_AVAILABLE": DEVICE_AVAILABLE,
            @"DEVICE_CONNECTED": DEVICE_CONNECTED,
            @"MEDIA_LOADED": MEDIA_LOADED,
+           @"MEDIA_STOPPED":MEDIA_STOPPED,
            };
 }
 
@@ -111,6 +113,13 @@ RCT_EXPORT_METHOD(togglePauseCast)
 
 RCT_EXPORT_METHOD(seekCast:(double) seconds){
   [self.mediaControlChannel seekToTimeInterval: seconds];
+}
+
+RCT_EXPORT_METHOD(stopCast){
+  [self.mediaControlChannel stop];
+
+  [self emitMessageToRN:MEDIA_STOPPED
+                       :nil];
 }
 
 RCT_REMAP_METHOD(getDevices,

@@ -21,6 +21,9 @@ export default {
   castMedia: function (mediaUrl:string, title:string, imageUrl:string, seconds:number = 0) {
     GoogleCast.castMedia(mediaUrl, title, imageUrl, seconds);
   },
+  stopCast: function {
+    GoogleCast.stopCast();
+  },
   seekCast: function (seconds:number) {
     GoogleCast.seekCast(seconds);
   },
