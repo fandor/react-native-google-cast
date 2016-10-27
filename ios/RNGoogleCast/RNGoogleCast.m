@@ -8,6 +8,7 @@ static NSString *const DEVICE_AVAILABLE = @"GoogleCast:DeviceAvailable";
 static NSString *const DEVICE_CONNECTED = @"GoogleCast:DeviceConnected";
 static NSString *const DEVICE_DISCONNECTED = @"GoogleCast:DeviceDisconnected";
 static NSString *const MEDIA_LOADED = @"GoogleCast:MediaLoaded";
+static NSString *const APPLICATION_DISCONNECTED = @"GoogleCast:ApplicationDisconnected";
 
 
 @implementation GoogleCast
@@ -23,6 +24,7 @@ RCT_EXPORT_MODULE();
            @"DEVICE_CONNECTED": DEVICE_CONNECTED,
            @"DEVICE_DISCONNECTED": DEVICE_DISCONNECTED,
            @"MEDIA_LOADED": MEDIA_LOADED,
+           @"APPLICATION_DISCONNECTED": APPLICATION_DISCONNECTED,
            };
 }
 
@@ -231,6 +233,11 @@ RCT_REMAP_METHOD(getStreamPosition,
 
 - (void) mediaControlChannel:(GCKMediaControlChannel *)mediaControlChannel didCompleteLoadWithSessionID:(NSInteger)sessionID {
   [self emitMessageToRN:MEDIA_LOADED
+                       :nil];
+}
+
+- (void) deviceManager:(GCKDeviceManager *)deviceManager didDisconnectFromApplicationWithError:(NSError *__nullable)error {
+  [self emitMessageToRN:APPLICATION_DISCONNECTED
                        :nil];
 }
 
